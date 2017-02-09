@@ -293,6 +293,7 @@ ApplicationWindow {
                     checked: true
                     exclusiveGroup: sourceGroup
                     onClicked: {
+                        map.clearMapItems();
                         source.data = ":source1.geojson"
                     }
                 }
@@ -300,6 +301,7 @@ ApplicationWindow {
                     text: "Route 2"
                     exclusiveGroup: sourceGroup
                     onClicked: {
+                        map.clearMapItems();
                         source.data = ":source2.geojson"
                     }
                 }
@@ -307,10 +309,25 @@ ApplicationWindow {
                     text: "Route 3"
                     exclusiveGroup: sourceGroup
                     onClicked: {
+                        map.clearMapItems();
                         source.data = '{ "type": "FeatureCollection", "features": \
                             [{ "type": "Feature", "properties": {}, "geometry": { \
                             "type": "LineString", "coordinates": [[ 24.934938848018646, \
                             60.16830257086771 ], [ 24.943315386772156, 60.16227776476442 ]]}}]}'
+                    }
+                }
+                RadioButton {
+                    text: "Route 4"
+                    exclusiveGroup: sourceGroup
+                    onClicked: {
+                        map.clearMapItems();
+
+                        var circle = Qt.createQmlObject('import QtLocation 5.3; MapCircle {}', map)
+                        circle.center = QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
+                        circle.radius = 2000.0
+                        circle.border.width = 3
+
+                        map.addMapItem(circle)
                     }
                 }
             }
