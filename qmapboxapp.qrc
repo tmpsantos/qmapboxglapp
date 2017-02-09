@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qmapboxapp.qml</file>
+        <file>icon.png</file>
+        <file>source1.geojson</file>
+        <file>source2.geojson</file>
+        <file>label-arrow.svg</file>
+        <file>label-background.svg</file>
+    </qresource>
+</RCC>
