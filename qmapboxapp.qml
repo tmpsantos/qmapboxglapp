@@ -166,19 +166,6 @@ ApplicationWindow {
         transitions: Transition {
             ColorAnimation { properties: "lineColor"; easing.type: Easing.InOutQuad; duration: 500 }
         }
-
-        Image {
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.margins: 20
-
-            opacity: .75
-
-            sourceSize.width: 80
-            sourceSize.height: 80
-
-            source: "icon.png"
-        }
     }
 
     ColorDialog {
@@ -289,7 +276,7 @@ ApplicationWindow {
             ColumnLayout {
                 ExclusiveGroup { id: sourceGroup }
                 RadioButton {
-                    text: "Route 1"
+                    text: "JSON 1"
                     checked: true
                     exclusiveGroup: sourceGroup
                     onClicked: {
@@ -298,7 +285,7 @@ ApplicationWindow {
                     }
                 }
                 RadioButton {
-                    text: "Route 2"
+                    text: "JSON 2"
                     exclusiveGroup: sourceGroup
                     onClicked: {
                         map.clearMapItems();
@@ -306,7 +293,7 @@ ApplicationWindow {
                     }
                 }
                 RadioButton {
-                    text: "Route 3"
+                    text: "JSON Inline"
                     exclusiveGroup: sourceGroup
                     onClicked: {
                         map.clearMapItems();
@@ -317,7 +304,7 @@ ApplicationWindow {
                     }
                 }
                 RadioButton {
-                    text: "Route 4"
+                    text: "Circle"
                     exclusiveGroup: sourceGroup
                     onClicked: {
                         map.clearMapItems();
@@ -328,6 +315,35 @@ ApplicationWindow {
                         circle.border.width = 3
 
                         map.addMapItem(circle)
+                    }
+                }
+                RadioButton {
+                    Image {
+                        id: icon
+
+                        visible: false
+                        opacity: .75
+
+                        sourceSize.width: 80
+                        sourceSize.height: 80
+
+                        source: "icon.png"
+                    }
+
+                    text: "QuickItem"
+                    exclusiveGroup: sourceGroup
+                    onClicked: {
+                        map.clearMapItems();
+
+                        var item = Qt.createQmlObject('import QtLocation 5.3; MapQuickItem {}', map)
+                        item.coordinate = QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
+                        item.sourceItem = icon
+                        item.anchorPoint.x = icon.width / 2
+                        item.anchorPoint.y = icon.height / 2
+
+                        icon.visible = true
+
+                        map.addMapItem(item)
                     }
                 }
             }
