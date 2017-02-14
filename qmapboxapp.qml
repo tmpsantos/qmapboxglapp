@@ -183,7 +183,7 @@ ApplicationWindow {
         }
 
         states: State {
-            name: "moved"; when: mouseArea.pressed
+            name: "moved"; when: map.gesture.panActive
             PropertyChanges { target: linePaint; lineColor: "red"; }
         }
 
