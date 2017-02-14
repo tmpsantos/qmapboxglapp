@@ -28,35 +28,40 @@ ApplicationWindow {
 
         MapParameter {
             id: waterPaint
-            property var type: "paint"
+            type: "paint"
+
             property var layer: "water"
             property var fillColor: waterColorDialog.color
         }
 
         MapParameter {
             id: source
-            property var type: "source"
+            type: "source"
+
             property var name: "routeSource"
             property var sourceType: "geojson"
             property var data: ":source1.geojson"
         }
 
         MapParameter {
-            property var type: "layer"
+            type: "layer"
+
             property var name: "routeCase"
             property var layerType: "line"
             property var source: "routeSource"
         }
 
         MapParameter {
-            property var type: "paint"
+            type: "paint"
+
             property var layer: "routeCase"
             property var lineColor: "white"
             property var lineWidth: 20.0
         }
 
         MapParameter {
-            property var type: "layout"
+            type: "layout"
+
             property var layer: "routeCase"
             property var lineJoin: "round"
             property var lineCap: lineJoin
@@ -64,7 +69,8 @@ ApplicationWindow {
         }
 
         MapParameter {
-            property var type: "layer"
+            type: "layer"
+
             property var name: "route"
             property var layerType: "line"
             property var source: "routeSource"
@@ -72,14 +78,16 @@ ApplicationWindow {
 
         MapParameter {
             id: linePaint
-            property var type: "paint"
+            type: "paint"
+
             property var layer: "route"
             property var lineColor: "blue"
             property var lineWidth: 8.0
         }
 
         MapParameter {
-            property var type: "layout"
+            type: "layout"
+
             property var layer: "route"
             property var lineJoin: "round"
             property var lineCap: "round"
@@ -87,26 +95,30 @@ ApplicationWindow {
         }
 
         MapParameter {
-            property var type: "image"
+            type: "image"
+
             property var name: "label-arrow"
             property var sprite: ":label-arrow.svg"
         }
 
         MapParameter {
-            property var type: "image"
+            type: "image"
+
             property var name: "label-background"
             property var sprite: ":label-background.svg"
         }
 
         MapParameter {
-            property var type: "layer"
+            type: "layer"
+
             property var name: "markerArrow"
             property var layerType: "symbol"
             property var source: "routeSource"
         }
 
         MapParameter {
-            property var type: "layout"
+            type: "layout"
+
             property var layer: "markerArrow"
             property var iconImage: "label-arrow"
             property var iconSize: 0.5
@@ -116,14 +128,16 @@ ApplicationWindow {
         }
 
         MapParameter {
-            property var type: "layer"
+            type: "layer"
+
             property var name: "markerBackground"
             property var layerType: "symbol"
             property var source: "routeSource"
         }
 
         MapParameter {
-            property var type: "layout"
+            type: "layout"
+
             property var layer: "markerBackground"
             property var iconImage: "label-background"
             property var textField: "{name}"
@@ -141,19 +155,22 @@ ApplicationWindow {
         }
 
         MapParameter {
-            property var type: "paint"
+            type: "paint"
+
             property var layer: "markerBackground"
             property var textColor: "white"
         }
 
         MapParameter {
-            property var type: "filter"
+            type: "filter"
+
             property var layer: "markerArrow"
             property var filter: [ "==", "$type", "Point" ]
         }
 
         MapParameter {
-            property var type: "filter"
+            type: "filter"
+
             property var layer: "markerBackground"
             property var filter: [ "==", "$type", "Point" ]
         }
