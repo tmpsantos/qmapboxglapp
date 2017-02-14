@@ -318,6 +318,21 @@ ApplicationWindow {
                     }
                 }
                 RadioButton {
+                    text: "Polyline"
+                    exclusiveGroup: sourceGroup
+                    onClicked: {
+                        map.clearMapItems();
+
+                        var poly = Qt.createQmlObject('import QtLocation 5.3; MapPolyline {}', map)
+                        poly.addCoordinate(QtPositioning.coordinate(60.210448, 24.912046))
+                        poly.addCoordinate(QtPositioning.coordinate(60.170448, 24.942046))
+                        poly.line.width = 3
+                        poly.line.color = "red"
+
+                        map.addMapItem(poly)
+                    }
+                }
+                RadioButton {
                     Image {
                         id: icon
 
