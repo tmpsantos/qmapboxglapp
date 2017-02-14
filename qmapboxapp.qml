@@ -27,6 +27,13 @@ ApplicationWindow {
         color: landColorDialog.color
 
         MapParameter {
+            type: "bogus"
+
+            property var test1: "foobar"
+            property var test2: 123
+        }
+
+        MapParameter {
             id: waterPaint
             type: "paint"
 
