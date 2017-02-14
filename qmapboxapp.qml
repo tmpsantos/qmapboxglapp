@@ -72,7 +72,7 @@ ApplicationWindow {
             property var layer: "routeCase"
             property var lineJoin: "round"
             property var lineCap: lineJoin
-            property var visibility: toggleRoute.checked ? "visible" : "none"
+            property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
         }
 
         MapParameter {
@@ -98,7 +98,7 @@ ApplicationWindow {
             property var layer: "route"
             property var lineJoin: "round"
             property var lineCap: "round"
-            property var visibility: toggleRoute.checked ? "visible" : "none"
+            property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
         }
 
         MapParameter {
@@ -131,7 +131,7 @@ ApplicationWindow {
             property var iconSize: 0.5
             property var iconIgnorePlacement: true
             property var iconOffset: [ 0.0, -15.0 ]
-            property var visibility: toggleRoute.checked ? "visible" : "none"
+            property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
         }
 
         MapParameter {
@@ -158,7 +158,7 @@ ApplicationWindow {
             property var textMaxWidth: 8.0
             property var iconTextFitPadding: [ 15.0, 10.0, 15.0, 10.0 ]
             property var textOffset: [ -0.5, -1.5 ]
-            property var visibility: toggleRoute.checked ? "visible" : "none"
+            property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
         }
 
         MapParameter {
@@ -236,7 +236,6 @@ ApplicationWindow {
 
         Slider {
             id: tiltSlider
-
             anchors.left: parent.left
             anchors.right: parent.right
             maximumValue: 60
@@ -295,7 +294,7 @@ ApplicationWindow {
         GroupBox {
             anchors.left: parent.left
             anchors.right: parent.right
-            title: "Route:"
+            title: "Items:"
 
             ColumnLayout {
                 ExclusiveGroup { id: sourceGroup }
@@ -386,14 +385,6 @@ ApplicationWindow {
                     }
                 }
             }
-        }
-
-        CheckBox {
-            id: toggleRoute
-            anchors.left: parent.left
-            anchors.right: parent.right
-            text: "Toggle route"
-            checked: true
         }
     }
 }
