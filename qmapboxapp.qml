@@ -209,6 +209,22 @@ ApplicationWindow {
         }
     }
 
+    Map {
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.margins: 10
+
+        width: 200
+        height: 200
+
+        copyrightsVisible: false
+
+        plugin: Plugin { name: "mapboxgl" }
+
+        center: map.center
+        zoomLevel: map.zoomLevel - 4
+    }
+
     ColorDialog {
         id: landColorDialog
         title: "Land color"
