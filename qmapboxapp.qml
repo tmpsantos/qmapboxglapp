@@ -219,7 +219,14 @@ ApplicationWindow {
 
         copyrightsVisible: false
 
-        plugin: Plugin { name: "mapboxgl" }
+        plugin: Plugin {
+            name: "mapboxgl"
+
+            PluginParameter {
+                name: "mapboxgl.mapping.cache.memory";
+                value: true
+            }
+        }
 
         center: map.center
         zoomLevel: map.zoomLevel - 4
@@ -260,7 +267,6 @@ ApplicationWindow {
 
             anchors.left: parent.left
             anchors.right: parent.right
-            value: 30
             minimumValue: 0
             maximumValue: 180
         }
