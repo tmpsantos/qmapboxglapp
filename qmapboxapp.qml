@@ -12,183 +12,200 @@ ApplicationWindow {
     height: 768
     visible: true
 
-    Map {
-        id: map
+    Flipable {
+        id: flipable
         anchors.fill: parent
 
-        plugin: Plugin { name: "mapboxgl" }
-
-        center: QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
-        zoomLevel: 12.25
-        minimumZoomLevel: 0
-        maximumZoomLevel: 20
-        tilt: tiltSlider.value
-        bearing: bearingSlider.value
-        color: landColorDialog.color
-
-        MapParameter {
-            type: "bogus"
-
-            property var test1: "foobar"
-            property var test2: 123
+        transform: Rotation {
+            origin.x: flipable.width / 2
+            origin.y: flipable.height / 2
+            axis.x: 0; axis.y: 1; axis.z: 0
+            angle: flipSlider.value
         }
 
-        MapParameter {
-            id: waterPaint
-            type: "paint"
+        front: Map {
+            id: map
+            anchors.fill: parent
 
-            property var layer: "water"
-            property var fillColor: waterColorDialog.color
+            plugin: Plugin { name: "mapboxgl" }
+
+            center: QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
+            zoomLevel: 12.25
+            minimumZoomLevel: 0
+            maximumZoomLevel: 20
+            tilt: tiltSlider.value
+            bearing: bearingSlider.value
+            color: landColorDialog.color
+
+            MapParameter {
+                type: "bogus"
+
+                property var test1: "foobar"
+                property var test2: 123
+            }
+
+            MapParameter {
+                id: waterPaint
+                type: "paint"
+
+                property var layer: "water"
+                property var fillColor: waterColorDialog.color
+            }
+
+            MapParameter {
+                id: source
+                type: "source"
+
+                property var name: "routeSource"
+                property var sourceType: "geojson"
+                property var data: ":source1.geojson"
+            }
+
+            MapParameter {
+                type: "layer"
+
+                property var name: "routeCase"
+                property var layerType: "line"
+                property var source: "routeSource"
+            }
+
+            MapParameter {
+                type: "paint"
+
+                property var layer: "routeCase"
+                property var lineColor: "white"
+                property var lineWidth: 20.0
+            }
+
+            MapParameter {
+                type: "layout"
+
+                property var layer: "routeCase"
+                property var lineJoin: "round"
+                property var lineCap: lineJoin
+                property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
+            }
+
+            MapParameter {
+                type: "layer"
+
+                property var name: "route"
+                property var layerType: "line"
+                property var source: "routeSource"
+            }
+
+            MapParameter {
+                id: linePaint
+                type: "paint"
+
+                property var layer: "route"
+                property var lineColor: "blue"
+                property var lineWidth: 8.0
+            }
+
+            MapParameter {
+                type: "layout"
+
+                property var layer: "route"
+                property var lineJoin: "round"
+                property var lineCap: "round"
+                property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
+            }
+
+            MapParameter {
+                type: "image"
+
+                property var name: "label-arrow"
+                property var sprite: ":label-arrow.svg"
+            }
+
+            MapParameter {
+                type: "image"
+
+                property var name: "label-background"
+                property var sprite: ":label-background.svg"
+            }
+
+            MapParameter {
+                type: "layer"
+
+                property var name: "markerArrow"
+                property var layerType: "symbol"
+                property var source: "routeSource"
+            }
+
+            MapParameter {
+                type: "layout"
+
+                property var layer: "markerArrow"
+                property var iconImage: "label-arrow"
+                property var iconSize: 0.5
+                property var iconIgnorePlacement: true
+                property var iconOffset: [ 0.0, -15.0 ]
+                property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
+            }
+
+            MapParameter {
+                type: "layer"
+
+                property var name: "markerBackground"
+                property var layerType: "symbol"
+                property var source: "routeSource"
+            }
+
+            MapParameter {
+                type: "layout"
+
+                property var layer: "markerBackground"
+                property var iconImage: "label-background"
+                property var textField: "{name}"
+                property var iconTextFit: "both"
+                property var iconIgnorePlacement: true
+                property var textIgnorePlacement: true
+                property var textAnchor: "left"
+                property var textSize: 16.0
+                property var textPadding: 0.0
+                property var textLineHeight: 1.0
+                property var textMaxWidth: 8.0
+                property var iconTextFitPadding: [ 15.0, 10.0, 15.0, 10.0 ]
+                property var textOffset: [ -0.5, -1.5 ]
+                property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
+            }
+
+            MapParameter {
+                type: "paint"
+
+                property var layer: "markerBackground"
+                property var textColor: "white"
+            }
+
+            MapParameter {
+                type: "filter"
+
+                property var layer: "markerArrow"
+                property var filter: [ "==", "$type", "Point" ]
+            }
+
+            MapParameter {
+                type: "filter"
+
+                property var layer: "markerBackground"
+                property var filter: [ "==", "$type", "Point" ]
+            }
+
+            states: State {
+                name: "moved"; when: map.gesture.panActive
+                PropertyChanges { target: linePaint; lineColor: "red"; }
+            }
+
+            transitions: Transition {
+                ColorAnimation { properties: "lineColor"; easing.type: Easing.InOutQuad; duration: 500 }
+            }
         }
 
-        MapParameter {
-            id: source
-            type: "source"
-
-            property var name: "routeSource"
-            property var sourceType: "geojson"
-            property var data: ":source1.geojson"
-        }
-
-        MapParameter {
-            type: "layer"
-
-            property var name: "routeCase"
-            property var layerType: "line"
-            property var source: "routeSource"
-        }
-
-        MapParameter {
-            type: "paint"
-
-            property var layer: "routeCase"
-            property var lineColor: "white"
-            property var lineWidth: 20.0
-        }
-
-        MapParameter {
-            type: "layout"
-
-            property var layer: "routeCase"
-            property var lineJoin: "round"
-            property var lineCap: lineJoin
-            property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
-        }
-
-        MapParameter {
-            type: "layer"
-
-            property var name: "route"
-            property var layerType: "line"
-            property var source: "routeSource"
-        }
-
-        MapParameter {
-            id: linePaint
-            type: "paint"
-
-            property var layer: "route"
-            property var lineColor: "blue"
-            property var lineWidth: 8.0
-        }
-
-        MapParameter {
-            type: "layout"
-
-            property var layer: "route"
-            property var lineJoin: "round"
-            property var lineCap: "round"
-            property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
-        }
-
-        MapParameter {
-            type: "image"
-
-            property var name: "label-arrow"
-            property var sprite: ":label-arrow.svg"
-        }
-
-        MapParameter {
-            type: "image"
-
-            property var name: "label-background"
-            property var sprite: ":label-background.svg"
-        }
-
-        MapParameter {
-            type: "layer"
-
-            property var name: "markerArrow"
-            property var layerType: "symbol"
-            property var source: "routeSource"
-        }
-
-        MapParameter {
-            type: "layout"
-
-            property var layer: "markerArrow"
-            property var iconImage: "label-arrow"
-            property var iconSize: 0.5
-            property var iconIgnorePlacement: true
-            property var iconOffset: [ 0.0, -15.0 ]
-            property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
-        }
-
-        MapParameter {
-            type: "layer"
-
-            property var name: "markerBackground"
-            property var layerType: "symbol"
-            property var source: "routeSource"
-        }
-
-        MapParameter {
-            type: "layout"
-
-            property var layer: "markerBackground"
-            property var iconImage: "label-background"
-            property var textField: "{name}"
-            property var iconTextFit: "both"
-            property var iconIgnorePlacement: true
-            property var textIgnorePlacement: true
-            property var textAnchor: "left"
-            property var textSize: 16.0
-            property var textPadding: 0.0
-            property var textLineHeight: 1.0
-            property var textMaxWidth: 8.0
-            property var iconTextFitPadding: [ 15.0, 10.0, 15.0, 10.0 ]
-            property var textOffset: [ -0.5, -1.5 ]
-            property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
-        }
-
-        MapParameter {
-            type: "paint"
-
-            property var layer: "markerBackground"
-            property var textColor: "white"
-        }
-
-        MapParameter {
-            type: "filter"
-
-            property var layer: "markerArrow"
-            property var filter: [ "==", "$type", "Point" ]
-        }
-
-        MapParameter {
-            type: "filter"
-
-            property var layer: "markerBackground"
-            property var filter: [ "==", "$type", "Point" ]
-        }
-
-        states: State {
-            name: "moved"; when: map.gesture.panActive
-            PropertyChanges { target: linePaint; lineColor: "red"; }
-        }
-
-        transitions: Transition {
-            ColorAnimation { properties: "lineColor"; easing.type: Easing.InOutQuad; duration: 500 }
+        back: Image {
+            anchors.fill: parent
+            source: "icon.png"
         }
     }
 
@@ -217,6 +234,20 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.margins: 30
+
+        Label {
+            text: "Flip:"
+        }
+
+        Slider {
+            id: flipSlider
+
+            anchors.left: parent.left
+            anchors.right: parent.right
+            value: 30
+            minimumValue: 0
+            maximumValue: 180
+        }
 
         Label {
             text: "Bearing:"
