@@ -4,7 +4,7 @@
         <file>icon.png</file>
         <file>source1.geojson</file>
         <file>source2.geojson</file>
-        <file>label-arrow.svg</file>
-        <file>label-background.svg</file>
+        <file>label-arrow.png</file>
+        <file>label-background.png</file>
     </qresource>
 </RCC>

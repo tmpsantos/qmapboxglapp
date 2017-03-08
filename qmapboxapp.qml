@@ -116,14 +116,14 @@ ApplicationWindow {
                 type: "image"
 
                 property var name: "label-arrow"
-                property var sprite: ":label-arrow.svg"
+                property var sprite: ":label-arrow.png"
             }
 
             MapParameter {
                 type: "image"
 
                 property var name: "label-background"
-                property var sprite: ":label-background.svg"
+                property var sprite: ":label-background.png"
             }
 
             MapParameter {
