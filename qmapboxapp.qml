@@ -34,7 +34,6 @@ ApplicationWindow {
             minimumZoomLevel: 0
             maximumZoomLevel: 20
             tilt: tiltSlider.value
-            bearing: bearingSlider.value
             color: landColorDialog.color
 
             MapParameter {
@@ -212,7 +211,7 @@ ApplicationWindow {
     Map {
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.margins: 10
+        anchors.margins: 5
 
         width: 200
         height: 200
@@ -246,9 +245,9 @@ ApplicationWindow {
 
     Rectangle {
         anchors.fill: menu
-        anchors.margins: -20
-        radius: 30
+        anchors.margins: -5
         clip: true
+        opacity: .75
     }
 
     ColumnLayout {
@@ -256,7 +255,7 @@ ApplicationWindow {
 
         anchors.right: parent.right
         anchors.top: parent.top
-        anchors.margins: 30
+        anchors.margins: 10
 
         Label {
             text: "Flip:"
@@ -268,18 +267,6 @@ ApplicationWindow {
             anchors.left: parent.left
             anchors.right: parent.right
             minimumValue: 0
-            maximumValue: 180
-        }
-
-        Label {
-            text: "Bearing:"
-        }
-
-        Slider {
-            id: bearingSlider
-
-            anchors.left: parent.left
-            anchors.right: parent.right
             maximumValue: 180
         }
 
@@ -333,14 +320,14 @@ ApplicationWindow {
         Button {
             anchors.left: parent.left
             anchors.right: parent.right
-            text: "Select land color"
+            text: "Land color"
             onClicked: landColorDialog.open()
         }
 
         Button {
             anchors.left: parent.left
             anchors.right: parent.right
-            text: "Select water color"
+            text: "Water color"
             onClicked: waterColorDialog.open()
         }
 
