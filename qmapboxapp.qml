@@ -2,15 +2,180 @@ import QtGraphicalEffects 1.0
 import QtLocation 5.9
 import QtPositioning 5.0
 import QtQuick 2.0
-import QtQuick.Controls 1.0
-import QtQuick.Dialogs 1.0
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 
 ApplicationWindow {
-    title: "Qt Location Mapbox GL plugin"
+    id: window
+
+    title: "Mapbox GL for Qt 5.9"
     width: 1024
     height: 768
     visible: true
+
+    Rectangle {
+        anchors.fill: parent
+    }
+
+    header: ToolBar {
+        RowLayout {
+            anchors.fill: parent
+
+            Label {
+                Layout.fillWidth: true
+
+                text: window.title
+                elide: Label.ElideRight
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+            }
+
+            ComboBox {
+                Layout.minimumWidth: 200
+
+                currentIndex: 0
+
+                model: ListModel {
+                    id: styleModel
+                }
+
+                onActivated: {
+                    map.activeMapType = map.supportedMapTypes[index];
+                }
+            }
+        }
+    }
+
+    Drawer {
+        id: drawer
+
+        y: header.height
+        width: window.width * 0.4
+        height: window.height - header.height
+
+        ColumnLayout {
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: 10
+
+            GroupBox {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                title: "Flip:"
+
+                Slider {
+                    id: flipSlider
+
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    to: 180
+                }
+            }
+
+            GroupBox {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                title: "Items:"
+
+                ButtonGroup {
+                    id: sourceGroup
+
+                    buttons: column2.children
+                }
+
+                ColumnLayout {
+                    id: column2
+
+                    RadioButton {
+                        text: "JSON 1"
+                        checked: true
+                        onClicked: {
+                            map.clearMapItems();
+                            source.data = ":source1.geojson"
+                        }
+                    }
+
+                    RadioButton {
+                        text: "JSON 2"
+                        onClicked: {
+                            map.clearMapItems();
+                            source.data = ":source2.geojson"
+                        }
+                    }
+
+                    RadioButton {
+                        text: "JSON Inline"
+                        onClicked: {
+                            map.clearMapItems();
+                            source.data = '{ "type": "FeatureCollection", "features": \
+                                [{ "type": "Feature", "properties": {}, "geometry": { \
+                                "type": "LineString", "coordinates": [[ 24.934938848018646, \
+                                60.16830257086771 ], [ 24.943315386772156, 60.16227776476442 ]]}}]}'
+                        }
+                    }
+
+                    RadioButton {
+                        text: "Circle"
+                        onClicked: {
+                            map.clearMapItems();
+
+                            var circle = Qt.createQmlObject('import QtLocation 5.3; MapCircle {}', map)
+                            circle.center = QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
+                            circle.radius = 2000.0
+                            circle.border.width = 3
+
+                            map.addMapItem(circle)
+                        }
+                    }
+
+                    RadioButton {
+                        text: "Polyline"
+                        onClicked: {
+                            map.clearMapItems();
+
+                            var poly = Qt.createQmlObject('import QtLocation 5.3; MapPolyline {}', map)
+                            poly.addCoordinate(QtPositioning.coordinate(60.210448, 24.912046))
+                            poly.addCoordinate(QtPositioning.coordinate(60.170448, 24.942046))
+                            poly.line.width = 3
+                            poly.line.color = "red"
+
+                            map.addMapItem(poly)
+                        }
+                    }
+
+                    RadioButton {
+                        Image {
+                            id: icon
+
+                            visible: false
+                            opacity: .75
+
+                            sourceSize.width: 80
+                            sourceSize.height: 80
+
+                            source: "icon.png"
+                        }
+
+                        text: "QuickItem"
+                        onClicked: {
+                            map.clearMapItems();
+
+                            var item = Qt.createQmlObject('import QtLocation 5.3; MapQuickItem {}', map)
+                            item.coordinate = QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
+                            item.sourceItem = icon
+                            item.anchorPoint.x = icon.width / 2
+                            item.anchorPoint.y = icon.height / 2
+
+                            icon.visible = true
+
+                            map.addMapItem(item)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     Flipable {
         id: flipable
@@ -33,22 +198,12 @@ ApplicationWindow {
             zoomLevel: 12.25
             minimumZoomLevel: 0
             maximumZoomLevel: 20
-            tilt: tiltSlider.value
-            color: landColorDialog.color
 
             MapParameter {
                 type: "bogus"
 
                 property var test1: "foobar"
                 property var test2: 123
-            }
-
-            MapParameter {
-                id: waterPaint
-                type: "paint"
-
-                property var layer: "water"
-                property var fillColor: waterColorDialog.color
             }
 
             MapParameter {
@@ -82,7 +237,7 @@ ApplicationWindow {
                 property var layer: "routeCase"
                 property var lineJoin: "round"
                 property var lineCap: lineJoin
-                property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
+                property var visibility: sourceGroup.checkedButton.text.startsWith("JSON") ? "visible" : "none"
             }
 
             MapParameter {
@@ -108,7 +263,7 @@ ApplicationWindow {
                 property var layer: "route"
                 property var lineJoin: "round"
                 property var lineCap: "round"
-                property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
+                property var visibility: sourceGroup.checkedButton.text.startsWith("JSON") ? "visible" : "none"
             }
 
             MapParameter {
@@ -141,7 +296,7 @@ ApplicationWindow {
                 property var iconSize: 0.5
                 property var iconIgnorePlacement: true
                 property var iconOffset: [ 0.0, -15.0 ]
-                property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
+                property var visibility: sourceGroup.checkedButton.text.startsWith("JSON") ? "visible" : "none"
             }
 
             MapParameter {
@@ -168,7 +323,7 @@ ApplicationWindow {
                 property var textMaxWidth: 8.0
                 property var iconTextFitPadding: [ 15.0, 10.0, 15.0, 10.0 ]
                 property var textOffset: [ -0.5, -1.5 ]
-                property var visibility: sourceGroup.current.text.startsWith("JSON") ? "visible" : "none"
+                property var visibility: sourceGroup.checkedButton.text.startsWith("JSON") ? "visible" : "none"
             }
 
             MapParameter {
@@ -206,6 +361,12 @@ ApplicationWindow {
             anchors.fill: parent
             source: "icon.png"
         }
+
+        Component.onCompleted: {
+            for (var i = 0; i < map.supportedMapTypes.length; i++) {
+                styleModel.append({ text: map.supportedMapTypes[i].description });
+            }
+        }
     }
 
     Map {
@@ -213,9 +374,10 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.margins: 5
 
-        width: 200
-        height: 200
+        width: parent.width > parent.height ? parent.height * .2 : parent.width * .2
+        height: width
 
+        activeMapType: supportedMapTypes[4]
         copyrightsVisible: false
 
         plugin: Plugin {
@@ -229,202 +391,5 @@ ApplicationWindow {
 
         center: map.center
         zoomLevel: map.zoomLevel - 4
-    }
-
-    ColorDialog {
-        id: landColorDialog
-        title: "Land color"
-        color: "#e0ded8"
-    }
-
-    ColorDialog {
-        id: waterColorDialog
-        title: "Water color"
-        color: "#63c5ee"
-    }
-
-    Rectangle {
-        anchors.fill: menu
-        anchors.margins: -5
-        clip: true
-        opacity: .75
-    }
-
-    ColumnLayout {
-        id: menu
-
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.margins: 10
-
-        Label {
-            text: "Flip:"
-        }
-
-        Slider {
-            id: flipSlider
-
-            anchors.left: parent.left
-            anchors.right: parent.right
-            minimumValue: 0
-            maximumValue: 180
-        }
-
-        Label {
-            text: "Tilt:"
-        }
-
-        Slider {
-            id: tiltSlider
-            anchors.left: parent.left
-            anchors.right: parent.right
-            maximumValue: 60
-        }
-
-        GroupBox {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            title: "Style:"
-
-            ColumnLayout {
-                ExclusiveGroup { id: styleGroup }
-                RadioButton {
-                    text: map.supportedMapTypes[0].description
-                    checked: true
-                    exclusiveGroup: styleGroup
-                    onClicked: {
-                        map.activeMapType = map.supportedMapTypes[0]
-                        landColorDialog.color = "#e0ded8"
-                        waterColorDialog.color = "#63c5ee"
-                    }
-                }
-                RadioButton {
-                    text: map.supportedMapTypes[7].description
-                    exclusiveGroup: styleGroup
-                    onClicked: {
-                        map.activeMapType = map.supportedMapTypes[7]
-                        landColorDialog.color = "#343332"
-                        waterColorDialog.color = "#191a1a"
-                    }
-                }
-                RadioButton {
-                    text: map.supportedMapTypes[4].description
-                    exclusiveGroup: styleGroup
-                    onClicked: {
-                        map.activeMapType = map.supportedMapTypes[4]
-                    }
-                }
-            }
-        }
-
-        Button {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            text: "Land color"
-            onClicked: landColorDialog.open()
-        }
-
-        Button {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            text: "Water color"
-            onClicked: waterColorDialog.open()
-        }
-
-        GroupBox {
-            anchors.left: parent.left
-            anchors.right: parent.right
-            title: "Items:"
-
-            ColumnLayout {
-                ExclusiveGroup { id: sourceGroup }
-                RadioButton {
-                    text: "JSON 1"
-                    checked: true
-                    exclusiveGroup: sourceGroup
-                    onClicked: {
-                        map.clearMapItems();
-                        source.data = ":source1.geojson"
-                    }
-                }
-                RadioButton {
-                    text: "JSON 2"
-                    exclusiveGroup: sourceGroup
-                    onClicked: {
-                        map.clearMapItems();
-                        source.data = ":source2.geojson"
-                    }
-                }
-                RadioButton {
-                    text: "JSON Inline"
-                    exclusiveGroup: sourceGroup
-                    onClicked: {
-                        map.clearMapItems();
-                        source.data = '{ "type": "FeatureCollection", "features": \
-                            [{ "type": "Feature", "properties": {}, "geometry": { \
-                            "type": "LineString", "coordinates": [[ 24.934938848018646, \
-                            60.16830257086771 ], [ 24.943315386772156, 60.16227776476442 ]]}}]}'
-                    }
-                }
-                RadioButton {
-                    text: "Circle"
-                    exclusiveGroup: sourceGroup
-                    onClicked: {
-                        map.clearMapItems();
-
-                        var circle = Qt.createQmlObject('import QtLocation 5.3; MapCircle {}', map)
-                        circle.center = QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
-                        circle.radius = 2000.0
-                        circle.border.width = 3
-
-                        map.addMapItem(circle)
-                    }
-                }
-                RadioButton {
-                    text: "Polyline"
-                    exclusiveGroup: sourceGroup
-                    onClicked: {
-                        map.clearMapItems();
-
-                        var poly = Qt.createQmlObject('import QtLocation 5.3; MapPolyline {}', map)
-                        poly.addCoordinate(QtPositioning.coordinate(60.210448, 24.912046))
-                        poly.addCoordinate(QtPositioning.coordinate(60.170448, 24.942046))
-                        poly.line.width = 3
-                        poly.line.color = "red"
-
-                        map.addMapItem(poly)
-                    }
-                }
-                RadioButton {
-                    Image {
-                        id: icon
-
-                        visible: false
-                        opacity: .75
-
-                        sourceSize.width: 80
-                        sourceSize.height: 80
-
-                        source: "icon.png"
-                    }
-
-                    text: "QuickItem"
-                    exclusiveGroup: sourceGroup
-                    onClicked: {
-                        map.clearMapItems();
-
-                        var item = Qt.createQmlObject('import QtLocation 5.3; MapQuickItem {}', map)
-                        item.coordinate = QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
-                        item.sourceItem = icon
-                        item.anchorPoint.x = icon.width / 2
-                        item.anchorPoint.y = icon.height / 2
-
-                        icon.visible = true
-
-                        map.addMapItem(item)
-                    }
-                }
-            }
-        }
     }
 }
