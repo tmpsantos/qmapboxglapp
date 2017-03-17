@@ -88,8 +88,15 @@ ApplicationWindow {
                     id: column2
 
                     RadioButton {
-                        text: "JSON 1"
+                        text: "None"
                         checked: true
+                        onClicked: {
+                            map.clearMapItems();
+                        }
+                    }
+
+                    RadioButton {
+                        text: "JSON 1"
                         onClicked: {
                             map.clearMapItems();
                             source.data = ":source1.geojson"
