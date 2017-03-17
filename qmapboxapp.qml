@@ -199,7 +199,14 @@ ApplicationWindow {
             id: map
             anchors.fill: parent
 
-            plugin: Plugin { name: "mapboxgl" }
+            plugin: Plugin {
+                name: "mapboxgl"
+
+                PluginParameter {
+                    name: "mapboxgl.mapping.use_fbo";
+                    value: true
+                }
+            }
 
             center: QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
             zoomLevel: 12.25
