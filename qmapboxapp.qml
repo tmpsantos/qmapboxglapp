@@ -374,8 +374,10 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.margins: 5
 
-        width: parent.width > parent.height ? parent.height * .2 : parent.width * .2
-        height: width
+        width: 100
+        height: 100
+
+        gesture.enabled: false
 
         activeMapType: supportedMapTypes[4]
         copyrightsVisible: false
