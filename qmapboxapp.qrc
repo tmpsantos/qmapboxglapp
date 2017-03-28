@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>qmapboxapp.qml</file>
         <file>icon.png</file>
+        <file>marker-green.png</file>
+        <file>marker-red.png</file>
         <file>source1.geojson</file>
         <file>source2.geojson</file>
         <file>label-arrow.png</file>
