@@ -92,6 +92,7 @@ ApplicationWindow {
                         checked: true
                         onClicked: {
                             map.clearMapItems();
+                            minimap.clearMapItems();
                         }
                     }
 
@@ -99,6 +100,7 @@ ApplicationWindow {
                         text: "JSON 1"
                         onClicked: {
                             map.clearMapItems();
+                            minimap.clearMapItems();
                             source.data = ":source1.geojson"
                         }
                     }
@@ -107,6 +109,7 @@ ApplicationWindow {
                         text: "JSON 2"
                         onClicked: {
                             map.clearMapItems();
+                            minimap.clearMapItems();
                             source.data = ":source2.geojson"
                         }
                     }
@@ -115,6 +118,7 @@ ApplicationWindow {
                         text: "JSON Inline"
                         onClicked: {
                             map.clearMapItems();
+                            minimap.clearMapItems();
                             source.data = '{ "type": "FeatureCollection", "features": \
                                 [{ "type": "Feature", "properties": {}, "geometry": { \
                                 "type": "LineString", "coordinates": [[ 24.934938848018646, \
@@ -126,6 +130,7 @@ ApplicationWindow {
                         text: "Circle"
                         onClicked: {
                             map.clearMapItems();
+                            minimap.clearMapItems();
 
                             var circle = Qt.createQmlObject('import QtLocation 5.3; MapCircle {}', map)
                             circle.center = QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
@@ -140,6 +145,7 @@ ApplicationWindow {
                         text: "Polyline"
                         onClicked: {
                             map.clearMapItems();
+                            minimap.clearMapItems();
 
                             var poly = Qt.createQmlObject('import QtLocation 5.3; MapPolyline {}', map)
                             poly.addCoordinate(QtPositioning.coordinate(60.210448, 24.912046))
@@ -445,6 +451,7 @@ ApplicationWindow {
     }
 
     Map {
+        id: minimap
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.margins: 5
