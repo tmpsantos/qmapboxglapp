@@ -10,5 +10,8 @@ ios|android {
 SOURCES += \
     qmapboxapp.cpp
 
+OTHER_FILES += \
+    qmapboxapp.qml
+
 RESOURCES += \
     qmapboxapp.qrc
