@@ -5,8 +5,14 @@ import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 
+import com.mapbox.cheap_ruler 1.0
+
 ApplicationWindow {
     id: window
+
+    // Km/h
+    property var carSpeed: 50
+    property var navigating: true
 
     title: "Mapbox GL for Qt 5.9"
     width: 1024
@@ -15,6 +21,19 @@ ApplicationWindow {
 
     Rectangle {
         anchors.fill: parent
+
+        states: [
+            State {
+                name: ""
+                PropertyChanges { target: map; tilt: 0; zoomLevel: map.zoomLevel }
+            },
+            State {
+                name: "navigating"
+                PropertyChanges { target: map; tilt: 60; zoomLevel: 20 }
+            }
+        ]
+
+        state: navigating ? "navigating" : ""
     }
 
     header: ToolBar {
@@ -214,10 +233,51 @@ ApplicationWindow {
                 }
             }
 
-            center: QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
+            center: window.navigating ? ruler.currentPosition : map.center
             zoomLevel: 12.25
             minimumZoomLevel: 0
             maximumZoomLevel: 20
+            tilt: 60
+
+            MouseArea {
+                anchors.fill: parent
+
+                onWheel: {
+                    window.navigating = false
+                    wheel.accepted = false
+                }
+            }
+            gesture.onPanStarted: {
+                window.navigating = false
+            }
+
+            gesture.onPinchStarted: {
+                window.navigating = false
+            }
+
+            RotationAnimation on bearing {
+                id: bearingAnimation
+
+                duration: 250
+                alwaysRunToEnd: false
+                direction: RotationAnimation.Shortest
+                running: window.navigating
+            }
+
+            Location {
+                id: previousLocation
+                coordinate: QtPositioning.coordinate(0, 0);
+            }
+
+            onCenterChanged: {
+                if (previousLocation.coordinate == center || !window.navigating)
+                    return;
+
+                bearingAnimation.to = previousLocation.coordinate.azimuthTo(center);
+                bearingAnimation.start();
+
+                previousLocation.coordinate = center;
+            }
 
             MapParameter {
                 type: "bogus"
@@ -397,10 +457,10 @@ ApplicationWindow {
                 MouseArea  {
                     drag.target: parent
                     anchors.fill: parent
-                }
 
-                onCoordinateChanged: {
-                    map.updateRoute();
+                    onReleased: {
+                        map.updateRoute();
+                    }
                 }
             }
 
@@ -419,10 +479,10 @@ ApplicationWindow {
                 MouseArea  {
                     drag.target: parent
                     anchors.fill: parent
-                }
 
-                onCoordinateChanged: {
-                    map.updateRoute();
+                    onReleased: {
+                        map.updateRoute();
+                    }
                 }
             }
 
@@ -434,6 +494,34 @@ ApplicationWindow {
                     line.color: "blue"
                     line.width: 4
                     opacity: (index == 0) ? 1.0 : 0.3
+
+                    onRouteChanged: {
+                        ruler.path = routeData.path;
+                        ruler.currentDistance = 0;
+
+                        currentDistanceAnimation.stop();
+                        currentDistanceAnimation.to = ruler.distance;
+                        currentDistanceAnimation.start();
+
+                        window.navigating = true
+                    }
+                }
+            }
+
+            MapCircle {
+                center: ruler.currentPosition
+                radius: 2
+                color: 'red'
+            }
+
+            CheapRuler {
+                id: ruler
+
+                PropertyAnimation on currentDistance {
+                    id: currentDistanceAnimation
+
+                    duration: ruler.distance / window.carSpeed * 60 * 60 * 1000
+                    alwaysRunToEnd: false
                 }
             }
         }

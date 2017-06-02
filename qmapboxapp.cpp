@@ -8,6 +8,8 @@
 #include <QQmlApplicationEngine>
 #include <qqml.h>
 
+#include "qcheapruler.hpp"
+
 int main(int argc, char *argv[])
 {
     qputenv("QT_QUICK_CONTROLS_STYLE", "material");
@@ -22,6 +24,8 @@ int main(int argc, char *argv[])
 #endif
 
     app.setWindowIcon(QIcon(":icon.png"));
+
+    qmlRegisterType<QCheapRuler>("com.mapbox.cheap_ruler", 1, 0, "CheapRuler");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/qmapboxapp.qml")));
