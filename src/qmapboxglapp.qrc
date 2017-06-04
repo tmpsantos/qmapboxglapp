@@ -1,8 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>qmapboxglapp.qml</file>
-        <file>DateAndTime.qml</file>
-        <file>MapWindow.qml</file>
-        <file>StatusBar.qml</file>
+        <file>qml/qmldir</file>
+        <file>qml/DateAndTime.qml</file>
+        <file>qml/CustomLabel.qml</file>
+        <file>qml/Main.qml</file>
+        <file>qml/MapWindow.qml</file>
+        <file>qml/StatusBar.qml</file>
     </qresource>
 </RCC>

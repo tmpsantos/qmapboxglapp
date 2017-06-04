@@ -38,9 +38,7 @@ Item {
         width: parent.width / 4
         spacing: 10
 
-        Loader {
-            source: "qrc:DateAndTime.qml"
-        }
+        DateAndTime {}
     }
 
     Image {

@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<QCheapRuler>("com.mapbox.cheap_ruler", 1, 0, "CheapRuler");
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/qmapboxglapp.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:qml/Main.qml")));
 
     return app.exec();
 }

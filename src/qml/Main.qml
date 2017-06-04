@@ -6,6 +6,7 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 
 import com.mapbox.cheap_ruler 1.0
+import "qrc:/qml"
 
 ApplicationWindow {
     id: window
@@ -19,29 +20,23 @@ ApplicationWindow {
     height: 768
     visible: true
 
-    Loader {
+    StatusBar {
         anchors.left: parent.left
         anchors.right: parent.right
 
         z: 1
-
-        source: "qrc:StatusBar.qml"
     }
 
-    Loader {
+    MapWindow {
         anchors.fill: parent
         z: 0
-
-        source: "qrc:MapWindow.qml"
     }
 
-    Loader {
+    StatusBar {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
         z: 1
-
-        source: "qrc:StatusBar.qml"
     }
 }
