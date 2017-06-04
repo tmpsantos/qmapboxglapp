@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>qmapboxglapp.qml</file>
+        <file>MapWindow.qml</file>
     </qresource>
 </RCC>
