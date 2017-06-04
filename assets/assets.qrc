@@ -1,6 +1,11 @@
 <RCC>
     <qresource prefix="/">
+        <file>4g-signal-strength.png</file>
+        <file>bluetooth.png</file>
+        <file>john.png</file>
         <file>marker-green.png</file>
         <file>marker-red.png</file>
+        <file>simple-bottom-background.png</file>
+        <file>wifi-signal-strength.png</file>
     </qresource>
 </RCC>

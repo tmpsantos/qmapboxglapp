@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>qmapboxglapp.qml</file>
+        <file>DateAndTime.qml</file>
         <file>MapWindow.qml</file>
+        <file>StatusBar.qml</file>
     </qresource>
 </RCC>

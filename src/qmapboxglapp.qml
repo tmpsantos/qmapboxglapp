@@ -19,38 +19,29 @@ ApplicationWindow {
     height: 768
     visible: true
 
-    header: ToolBar {
-        RowLayout {
-            anchors.fill: parent
+    Loader {
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-            Label {
-                Layout.fillWidth: true
+        z: 1
 
-                text: window.title
-                elide: Label.ElideRight
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-            }
-
-            ComboBox {
-                Layout.minimumWidth: 200
-
-                currentIndex: 0
-
-                model: ListModel {
-                    id: styleModel
-                }
-
-                onActivated: {
-                    map.activeMapType = map.supportedMapTypes[index];
-                }
-            }
-        }
+        source: "qrc:StatusBar.qml"
     }
 
     Loader {
         anchors.fill: parent
+        z: 0
 
         source: "qrc:MapWindow.qml"
+    }
+
+    Loader {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        z: 1
+
+        source: "qrc:StatusBar.qml"
     }
 }
