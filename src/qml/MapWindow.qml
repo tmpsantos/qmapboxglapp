@@ -24,6 +24,22 @@ Item {
 
     state: navigating ? "navigating" : ""
 
+    Image {
+        anchors.left: parent.left
+        anchors.right: parent.right
+        z: 2
+
+        source: "qrc:map-overlay-edge-gradient.png"
+    }   
+
+    Image {
+        anchors.right: parent.right
+        anchors.top: parent.top
+        z: 3
+
+        source: "qrc:qt.png"
+    }  
+
     Map {
         id: map
         anchors.fill: parent
@@ -42,6 +58,9 @@ Item {
         minimumZoomLevel: 0
         maximumZoomLevel: 20
         tilt: 60
+
+        activeMapType: supportedMapTypes[9] // Mapbox Traffic Night
+        copyrightsVisible: false
 
         MouseArea {
             anchors.fill: parent

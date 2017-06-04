@@ -21,6 +21,8 @@ ApplicationWindow {
     visible: true
 
     StatusBar {
+        id: statusBar
+
         anchors.left: parent.left
         anchors.right: parent.right
 
@@ -28,11 +30,17 @@ ApplicationWindow {
     }
 
     MapWindow {
-        anchors.fill: parent
+        anchors.top: statusBar.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: footer.top
+
         z: 0
     }
 
     StatusBar {
+        id: footer
+
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
