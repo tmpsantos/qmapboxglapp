@@ -33,13 +33,13 @@ ApplicationWindow {
         anchors.top: statusBar.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: footer.top
+        anchors.bottom: bottomBar.top
 
         z: 0
     }
 
-    StatusBar {
-        id: footer
+    BottomBar {
+        id: bottomBar
 
         anchors.left: parent.left
         anchors.right: parent.right

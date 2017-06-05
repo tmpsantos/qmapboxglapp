@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/qmldir</file>
+        <file>qml/BottomBar.qml</file>
         <file>qml/DateAndTime.qml</file>
         <file>qml/CustomLabel.qml</file>
         <file>qml/Main.qml</file>
