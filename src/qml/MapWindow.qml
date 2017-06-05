@@ -48,6 +48,32 @@ Item {
         source: "qrc:mapbox.png"
     }
 
+    Image {
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.margins: 20
+        z: 3
+
+        visible: !mapWindow.navigating
+        source: "qrc:car-focus.png"
+
+        MouseArea {
+            id: area
+
+            anchors.fill: parent
+
+            onClicked: {
+                mapWindow.navigating = true
+            }
+        }
+
+        scale: area.pressed ? 0.85 : 1.0
+
+        Behavior on scale {
+            NumberAnimation {}
+        }
+    }
+
     Map {
         id: map
         anchors.fill: parent
