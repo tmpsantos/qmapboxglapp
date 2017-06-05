@@ -40,7 +40,7 @@ ApplicationWindow {
             anchors.top: statusBar.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.bottom: bottomBar.top
+            anchors.bottom: parent.bottom
 
             z: 0
         }

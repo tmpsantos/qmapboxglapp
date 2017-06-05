@@ -45,6 +45,8 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 5
+        anchors.bottomMargin: 270
+
         z: 3
 
         source: "qrc:qt.png"
@@ -54,6 +56,8 @@ Item {
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: 5
+        anchors.bottomMargin: 270
+
         z: 3
 
         source: "qrc:mapbox.png"
@@ -107,6 +111,16 @@ Item {
                 name: "mapboxgl.mapping.items.insert_before"
                 value: "road-label-minor"
             }
+
+            PluginParameter {
+                name: "mapboxgl.mapping.additional_style_urls"
+                value: "mapbox://styles/tmpsantos/cj3kj88ty000t2sp81kj5i9sa"
+            }
+
+            PluginParameter {
+                name: "mapboxgl.access_token"
+                value: "pk.eyJ1IjoidG1wc2FudG9zIiwiYSI6ImNqMWVzZWthbDAwMGIyd3M3ZDR0aXl3cnkifQ.FNxMeWCZgmujeiHjl44G9Q"
+            }
         }
 
         center: mapWindow.navigating ? ruler.currentPosition : map.center
@@ -115,7 +129,6 @@ Item {
         maximumZoomLevel: 20
         tilt: 60
 
-        activeMapType: supportedMapTypes[9] // Mapbox Traffic Night
         copyrightsVisible: false
 
         MouseArea {
