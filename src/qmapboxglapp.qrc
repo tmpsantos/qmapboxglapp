@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/qmldir</file>
+        <file>qml/AirFlow.qml</file>
         <file>qml/BottomBar.qml</file>
         <file>qml/ButtonTool.qml</file>
         <file>qml/CustomLabel.qml</file>

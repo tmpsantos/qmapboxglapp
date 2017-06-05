@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>4g-signal-strength.png</file>
+        <file>air-flow-down.png</file>
+        <file>air-flow-up.png</file>
         <file>auto-knob-down.png</file>
         <file>auto-knob-up.png</file>
         <file>bluetooth.png</file>

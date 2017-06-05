@@ -36,6 +36,10 @@ Item {
             text: "AUTO"
         }
 
+        AirFlow {
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
         ButtonTool {
             id: syncButton
 
