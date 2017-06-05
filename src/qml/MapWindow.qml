@@ -82,8 +82,8 @@ Item {
             name: "mapboxgl"
 
             PluginParameter {
-                name: "mapboxgl.mapping.use_fbo"
-                value: true
+                name: "mapboxgl.mapping.items.insert_before"
+                value: "road-label-minor"
             }
         }
 
@@ -191,8 +191,8 @@ Item {
 
             delegate: MapRoute {
                 route: routeData
-                line.color: "blue"
-                line.width: 4
+                line.color: "#ec0f73"
+                line.width: map.zoomLevel - 5
                 opacity: (index == 0) ? 1.0 : 0.3
 
                 onRouteChanged: {
@@ -209,6 +209,8 @@ Item {
         }
 
         MapQuickItem {
+            zoomLevel: map.zoomLevel
+
             sourceItem: Image {
                 id: carMarker
                 source: "qrc:///car-marker.png"
