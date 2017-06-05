@@ -30,7 +30,7 @@ Item {
         z: 2
 
         source: "qrc:map-overlay-edge-gradient.png"
-    }   
+    }
 
     Image {
         anchors.right: parent.right
@@ -38,7 +38,15 @@ Item {
         z: 3
 
         source: "qrc:qt.png"
-    }  
+    }
+
+    Image {
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        z: 3
+
+        source: "qrc:mapbox.png"
+    }
 
     Map {
         id: map
