@@ -14,20 +14,41 @@ double QCheapRuler::currentDistance() const
 
 void QCheapRuler::setCurrentDistance(double current)
 {
-    m_currentDistance = qMin(qMax(0., current), distance());
+    if (m_path.empty()) {
+        m_currentDistance = 0.;
+        m_currentPosition = QGeoCoordinate(0., 0.);
+        m_segmentIndex = 0;
 
-    emit currentDistanceChanged();
-    emit currentPositionChanged();
+        return;
+    }
+
+    double currentDistance = qMin(qMax(0., current), distance());
+    if (m_currentDistance != currentDistance) {
+        m_currentDistance = currentDistance;
+        emit currentDistanceChanged();
+    }
+
+    cr::point c = ruler().along(m_path, m_currentDistance);
+    if (m_currentPosition != QGeoCoordinate(c.y, c.x)) {
+        m_currentPosition = QGeoCoordinate(c.y, c.x);
+        emit currentPositionChanged();
+    }
+
+    unsigned segmentIndex = ruler().pointOnLine(m_path, c).second;
+    if (m_segmentIndex != segmentIndex) {
+        m_segmentIndex = segmentIndex;
+        emit segmentIndexChanged();
+    }
 }
 
 QGeoCoordinate QCheapRuler::currentPosition() const
 {
-    if (m_path.empty())
-        return QGeoCoordinate(60.180448, 24.942046);
+    return m_currentPosition;
+}
 
-    cr::point c = ruler().along(m_path, m_currentDistance);
-
-    return QGeoCoordinate(c.y, c.x);
+unsigned QCheapRuler::segmentIndex() const
+{
+    return m_segmentIndex;
 }
 
 QJSValue QCheapRuler::path() const
@@ -57,13 +78,15 @@ void QCheapRuler::setPath(const QJSValue &value)
         m_path.push_back(coordinate);
     }
 
-    m_currentDistance = 0.;
-    m_distance = ruler().lineDistance(m_path);
+    double distance = ruler().lineDistance(m_path);
+    if (m_distance != distance) {
+        m_distance = distance;
+        emit distanceChanged();
+    }
+
+    setCurrentDistance(0.);
 
     emit pathChanged();
-    emit distanceChanged();
-    emit currentDistanceChanged();
-    emit currentPositionChanged();
 }
 
 cr::CheapRuler QCheapRuler::ruler() const

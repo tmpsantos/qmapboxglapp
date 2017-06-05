@@ -8,7 +8,7 @@ Item {
     id: mapWindow
 
     // Km/h
-    property var carSpeed: 50
+    property var carSpeed: 35
     property var navigating: true
 
     states: [
@@ -43,7 +43,8 @@ Item {
 
     Image {
         anchors.right: parent.right
-        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.margins: 5
         z: 3
 
         source: "qrc:qt.png"
@@ -52,9 +53,21 @@ Item {
     Image {
         anchors.left: parent.left
         anchors.bottom: parent.bottom
+        anchors.margins: 5
         z: 3
 
         source: "qrc:mapbox.png"
+    }
+
+    CustomLabel {
+        id: turnInstructions
+
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.margins: 20
+        z: 3
+
+        font.pixelSize: 38
     }
 
     Image {
@@ -236,6 +249,17 @@ Item {
 
                 duration: ruler.distance / mapWindow.carSpeed * 60 * 60 * 1000
                 alwaysRunToEnd: false
+            }
+
+            onCurrentDistanceChanged: {
+                var total = 0;
+                var i = 0;
+
+                // XXX: Use car speed in meters to pre-warn the turn instruction
+                while (total - mapWindow.carSpeed < ruler.currentDistance * 1000 && i < routeModel.get(0).segments.length)
+                    total += routeModel.get(0).segments[i++].maneuver.distanceToNextInstruction;
+
+                turnInstructions.text = routeModel.get(0).segments[i - 1].maneuver.instructionText;
             }
         }
     }
