@@ -208,10 +208,15 @@ Item {
             }
         }
 
-        MapCircle {
-            center: ruler.currentPosition
-            radius: 2
-            color: 'red'
+        MapQuickItem {
+            sourceItem: Image {
+                id: carMarker
+                source: "qrc:///car-marker.png"
+            }
+
+            coordinate: ruler.currentPosition
+            anchorPoint.x: carMarker.width / 2
+            anchorPoint.y: carMarker.height / 2
         }
 
         CheapRuler {
