@@ -20,31 +20,38 @@ ApplicationWindow {
     height: 768
     visible: true
 
-    StatusBar {
-        id: statusBar
+    Item {
+        anchors.centerIn: parent
+        width: parent.height
+        height: parent.width
+        rotation: -90
 
-        anchors.left: parent.left
-        anchors.right: parent.right
+        StatusBar {
+            id: statusBar
 
-        z: 1
-    }
+            anchors.left: parent.left
+            anchors.right: parent.right
 
-    MapWindow {
-        anchors.top: statusBar.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: bottomBar.top
+            z: 1
+        }
 
-        z: 0
-    }
+        MapWindow {
+            anchors.top: statusBar.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: bottomBar.top
 
-    BottomBar {
-        id: bottomBar
+            z: 0
+        }
 
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        BottomBar {
+            id: bottomBar
 
-        z: 1
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            z: 1
+        }
     }
 }
