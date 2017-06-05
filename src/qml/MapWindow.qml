@@ -172,7 +172,7 @@ Item {
                 source: "qrc:///marker-green.png"
             }
 
-            coordinate : QtPositioning.coordinate(60.170448, 24.942046)
+            coordinate : QtPositioning.coordinate(37.7881955, -122.4003401)
             anchorPoint.x: greenMarker.width / 2
             anchorPoint.y: greenMarker.height / 2
 
@@ -194,7 +194,7 @@ Item {
                 source: "qrc:///marker-red.png"
             }
 
-            coordinate : QtPositioning.coordinate(60.180448, 24.942046)
+            coordinate : QtPositioning.coordinate(37.326323, -121.8923447)
             anchorPoint.x: redMarker.width / 2
             anchorPoint.y: redMarker.height / 2
 
