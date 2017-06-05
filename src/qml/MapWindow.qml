@@ -161,7 +161,7 @@ Item {
 
             coordinate : QtPositioning.coordinate(60.170448, 24.942046)
             anchorPoint.x: greenMarker.width / 2
-            anchorPoint.y: greenMarker.height
+            anchorPoint.y: greenMarker.height / 2
 
             MouseArea  {
                 drag.target: parent
@@ -183,7 +183,7 @@ Item {
 
             coordinate : QtPositioning.coordinate(60.180448, 24.942046)
             anchorPoint.x: redMarker.width / 2
-            anchorPoint.y: redMarker.height
+            anchorPoint.y: redMarker.height / 2
 
             MouseArea  {
                 drag.target: parent
