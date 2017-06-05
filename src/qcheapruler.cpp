@@ -23,7 +23,7 @@ void QCheapRuler::setCurrentDistance(double current)
 QGeoCoordinate QCheapRuler::currentPosition() const
 {
     if (m_path.empty())
-        return QGeoCoordinate(0., 0.);
+        return QGeoCoordinate(60.180448, 24.942046);
 
     cr::point c = ruler().along(m_path, m_currentDistance);
 
