@@ -7,5 +7,6 @@
         <file>qml/Main.qml</file>
         <file>qml/MapWindow.qml</file>
         <file>qml/StatusBar.qml</file>
+        <file>qml/TumblerTool.qml</file>
     </qresource>
 </RCC>

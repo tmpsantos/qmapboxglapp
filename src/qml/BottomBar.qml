@@ -16,16 +16,20 @@ Item {
     RowLayout {
         anchors.fill: parent
 
-        Image {
-            source: "qrc:bluetooth.png"
+        TumblerTool {
+            id: tumblerLeft
+
+            index: 10
+            Layout.fillWidth: true
+            anchors.verticalCenter: parent.verticalCenter
         }
 
-        Image {
-            source: "qrc:wifi-signal-strength.png"
-        }
+        TumblerTool {
+            id: tumblerRight
 
-        Image {
-            source: "qrc:4g-signal-strength.png"
+            index: 5
+            Layout.fillWidth: true
+            anchors.verticalCenter: parent.verticalCenter
         }
     }
 }

@@ -3,3 +3,4 @@ MapWindow 1.0 MapWindow.qml
 StatusBar 1.0 StatusBar.qml
 DateAndTime 1.0 DateAndTime.qml
 CustomLabel 1.0 CustomLabel.qml
+TumblerTool 1.0 TumblerTool.qml
