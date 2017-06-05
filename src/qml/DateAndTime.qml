@@ -32,7 +32,7 @@ Item {
 
         CustomLabel {
             font.capitalization: Font.AllUppercase
-            text: Qt.formatDateTime(dateAndTime.currentDate, "HH:MM")
+            text: Qt.formatDateTime(dateAndTime.currentDate, "HH:mm")
         }
     }
 
