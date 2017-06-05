@@ -19,6 +19,7 @@ ApplicationWindow {
     width: 1024
     height: 768
     visible: true
+    visibility: ApplicationWindow.FullScreen
 
     Item {
         anchors.centerIn: parent
