@@ -19,17 +19,48 @@ Item {
         TumblerTool {
             id: tumblerLeft
 
+            anchors.verticalCenter: parent.verticalCenter
+
             index: 10
             Layout.fillWidth: true
+
+            onIndexChanged: {
+                if (syncButton.checked === true)
+                    tumblerRight.index = tumblerLeft.index
+            }
+        }
+
+        ButtonTool {
             anchors.verticalCenter: parent.verticalCenter
+
+            text: "AUTO"
+        }
+
+        ButtonTool {
+            id: syncButton
+
+            anchors.verticalCenter: parent.verticalCenter
+
+            text: "SYNC"
+
+            onCheckedChanged: {
+                if (checked === true)
+                    tumblerRight.index = tumblerLeft.index
+            }
         }
 
         TumblerTool {
             id: tumblerRight
 
+            anchors.verticalCenter: parent.verticalCenter
+
             index: 5
             Layout.fillWidth: true
-            anchors.verticalCenter: parent.verticalCenter
+
+            onIndexChanged: {
+                if (syncButton.checked === true)
+                    tumblerLeft.index = tumblerRight.index
+            }
         }
     }
 }
