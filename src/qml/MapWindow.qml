@@ -211,8 +211,6 @@ Item {
                     currentDistanceAnimation.stop();
                     currentDistanceAnimation.to = ruler.distance;
                     currentDistanceAnimation.start();
-
-                    mapWindow.navigating = true
                 }
             }
         }
