@@ -5,6 +5,8 @@ import QtQuick.Layouts 1.0
 Item {
     id: bottomBar
 
+    property alias traffic: trafficButton.checked
+
     height: 270
 
     Image {
@@ -31,9 +33,11 @@ Item {
         }
 
         ButtonTool {
+            id: trafficButton
+
             anchors.verticalCenter: parent.verticalCenter
 
-            text: "AUTO"
+            text: "TRAFFIC"
         }
 
         AirFlow {

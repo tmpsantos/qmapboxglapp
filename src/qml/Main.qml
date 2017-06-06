@@ -43,6 +43,8 @@ ApplicationWindow {
             anchors.bottom: parent.bottom
 
             z: 0
+
+            traffic: bottomBar.traffic
         }
 
         BottomBar {

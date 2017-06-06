@@ -10,6 +10,7 @@ Item {
     // Km/h
     property var carSpeed: 35
     property var navigating: true
+    property var traffic: true
 
     states: [
         State {
@@ -109,12 +110,12 @@ Item {
 
             PluginParameter {
                 name: "mapboxgl.mapping.items.insert_before"
-                value: "road-label-minor"
+                value: "road-label-small"
             }
 
             PluginParameter {
                 name: "mapboxgl.mapping.additional_style_urls"
-                value: "mapbox://styles/tmpsantos/cj3kj88ty000t2sp81kj5i9sa"
+                value: "mapbox://styles/tmpsantos/cj3loga9r00142sqnchfae6ta"
             }
 
             PluginParameter {
@@ -130,6 +131,174 @@ Item {
         tilt: 60
 
         copyrightsVisible: false
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-3-motorway"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-3-motorway-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-2-motorway"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-2-motorway-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-1-motorway"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-1-motorway-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-0-motorway"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-0-motorway-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-3-other"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-3-other-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-3-other-high"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-3-other-high-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-2-other"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-2-other-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-2-other-high"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-2-other-high-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-1-other"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-1-other-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-1-other-high"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-1-other-high-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-0-other"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-0-other-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-0-other-high"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
+
+        MapParameter {
+            type: "layout"
+
+            property var layer: "traffic-0-other-high-case"
+            property var visibility: mapWindow.traffic ? "visible" : "none"
+        }
 
         MouseArea {
             anchors.fill: parent

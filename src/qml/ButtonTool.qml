@@ -14,7 +14,7 @@ Button {
             anchors.centerIn: parent
             text: control.text
             color: "#ffffff"
-            font.pixelSize: 18
+            font.pixelSize: 16
         }
     }
 
