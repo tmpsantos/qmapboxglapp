@@ -94,6 +94,6 @@ cr::CheapRuler QCheapRuler::ruler() const
     if (m_path.empty()) {
         return cr::CheapRuler(0., cr::CheapRuler::Kilometers);
     } else {
-        return cr::CheapRuler(m_path[0].y, cr::CheapRuler::Kilometers);
+        return cr::CheapRuler(m_currentPosition.latitude(), cr::CheapRuler::Kilometers);
     }
 }
