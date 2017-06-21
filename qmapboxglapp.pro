@@ -1,4 +1,4 @@
-TARGET = qmapboxapp
+TARGET = qmapboxglapp
 TEMPLATE = app
 
 QT += qml network quick positioning location sql widgets
@@ -8,10 +8,10 @@ ios|android {
 }
 
 SOURCES += \
-    qmapboxapp.cpp
+    qmapboxglapp.cpp
 
 OTHER_FILES += \
-    qmapboxapp.qml
+    qmapboxglapp.qml
 
 RESOURCES += \
-    qmapboxapp.qrc
+    qmapboxglapp.qrc

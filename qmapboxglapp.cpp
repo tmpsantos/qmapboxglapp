@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(":icon.png"));
 
     QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:/qmapboxapp.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/qmapboxglapp.qml")));
 
     return app.exec();
 }

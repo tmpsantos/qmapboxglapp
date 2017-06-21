@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>qmapboxapp.qml</file>
+        <file>qmapboxglapp.qml</file>
         <file>icon.png</file>
         <file>marker-green.png</file>
         <file>marker-red.png</file>
