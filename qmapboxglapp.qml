@@ -210,14 +210,20 @@ ApplicationWindow {
 
                 PluginParameter {
                     name: "mapboxgl.mapping.use_fbo"
-                    value: true
+                    value: false
+                }
+
+                PluginParameter {
+                    name: "mapboxgl.mapping.items.insert_before"
+                    value: "aerialway"
                 }
             }
 
             center: QtPositioning.coordinate(60.170448, 24.942046) // Helsinki
-            zoomLevel: 12.25
+            zoomLevel: 16
             minimumZoomLevel: 0
             maximumZoomLevel: 20
+            tilt: 45
 
             MapParameter {
                 type: "bogus"
@@ -241,6 +247,8 @@ ApplicationWindow {
                 property var name: "routeCase"
                 property var layerType: "line"
                 property var source: "routeSource"
+
+                property var before: "aerialway"
             }
 
             MapParameter {
@@ -266,6 +274,8 @@ ApplicationWindow {
                 property var name: "route"
                 property var layerType: "line"
                 property var source: "routeSource"
+
+                property var before: "aerialway"
             }
 
             MapParameter {
@@ -365,6 +375,33 @@ ApplicationWindow {
 
                 property var layer: "markerBackground"
                 property var filter: [ "==", "$type", "Point" ]
+            }
+
+            MapParameter {
+                type: "layer"
+
+                property var name: "3d-buildings"
+                property var source: "composite"
+                property var sourceLayer: "building"
+                property var layerType: "fill-extrusion"
+                property var minzoom: 15.0
+            }
+
+            MapParameter {
+                type: "filter"
+
+                property var layer: "3d-buildings"
+                property var filter: [ "==", "extrude", "true" ]
+            }
+
+            MapParameter {
+                type: "paint"
+
+                property var layer: "3d-buildings"
+                property var fillExtrusionColor: "#00617f"
+                property var fillExtrusionOpacity: .6
+                property var fillExtrusionHeight: { return { type: "identity", property: "height" } }
+                property var fillExtrusionBase: { return { type: "identity", property: "min_height" } }
             }
 
             states: State {
