@@ -76,6 +76,25 @@ ApplicationWindow {
             GroupBox {
                 anchors.left: parent.left
                 anchors.right: parent.right
+                title: "Dynamic MapParameter:"
+
+                Button {
+                    text: "Change water color"
+                    onClicked: {
+                        var param = Qt.createQmlObject('import QtLocation 5.9; MapParameter { \
+                            type: "paint"; \
+                            property var layer: "water"; \
+                            property var fillColor: "red"; \
+                        }', map)
+
+                        map.addMapParameter(param)
+                    }
+                }
+            }
+
+            GroupBox {
+                anchors.left: parent.left
+                anchors.right: parent.right
                 title: "Items:"
 
                 ButtonGroup {
