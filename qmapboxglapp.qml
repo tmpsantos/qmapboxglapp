@@ -229,7 +229,7 @@ ApplicationWindow {
 
                 PluginParameter {
                     name: "mapboxgl.mapping.use_fbo"
-                    value: false
+                    value: true
                 }
 
                 PluginParameter {
