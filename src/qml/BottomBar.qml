@@ -6,6 +6,7 @@ Item {
     id: bottomBar
 
     property alias traffic: trafficButton.checked
+    property alias night: nightButton.checked
 
     height: 270
 
@@ -25,11 +26,6 @@ Item {
 
             index: 10
             Layout.fillWidth: true
-
-            onIndexChanged: {
-                if (syncButton.checked === true)
-                    tumblerRight.index = tumblerLeft.index
-            }
         }
 
         ButtonTool {
@@ -38,6 +34,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
 
             text: "TRAFFIC"
+            checked: true
         }
 
         AirFlow {
@@ -45,16 +42,12 @@ Item {
         }
 
         ButtonTool {
-            id: syncButton
+            id: nightButton
 
             anchors.verticalCenter: parent.verticalCenter
 
-            text: "SYNC"
-
-            onCheckedChanged: {
-                if (checked === true)
-                    tumblerRight.index = tumblerLeft.index
-            }
+            text: "NIGHT"
+            checked: true
         }
 
         TumblerTool {
@@ -64,11 +57,6 @@ Item {
 
             index: 5
             Layout.fillWidth: true
-
-            onIndexChanged: {
-                if (syncButton.checked === true)
-                    tumblerLeft.index = tumblerRight.index
-            }
         }
     }
 }

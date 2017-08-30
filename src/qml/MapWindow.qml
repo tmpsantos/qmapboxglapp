@@ -11,6 +11,7 @@ Item {
     property var carSpeed: 35
     property var navigating: true
     property var traffic: true
+    property var night: true
 
     states: [
         State {
@@ -114,16 +115,12 @@ Item {
             }
 
             PluginParameter {
-                name: "mapboxgl.mapping.additional_style_urls"
-                value: "mapbox://styles/tmpsantos/cj3loga9r00142sqnchfae6ta"
-            }
-
-            PluginParameter {
                 name: "mapboxgl.access_token"
                 value: "pk.eyJ1IjoidG1wc2FudG9zIiwiYSI6ImNqMWVzZWthbDAwMGIyd3M3ZDR0aXl3cnkifQ.FNxMeWCZgmujeiHjl44G9Q"
             }
         }
 
+        activeMapType: night ? supportedMapTypes[9] : supportedMapTypes[8]
         center: mapWindow.navigating ? ruler.currentPosition : map.center
         zoomLevel: 12.25
         minimumZoomLevel: 0
@@ -300,6 +297,33 @@ Item {
             property var visibility: mapWindow.traffic ? "visible" : "none"
         }
 
+        MapParameter {
+            type: "layer"
+
+            property var name: "3d-buildings"
+            property var source: "composite"
+            property var sourceLayer: "building"
+            property var layerType: "fill-extrusion"
+            property var minzoom: 15.0
+        }
+
+        MapParameter {
+            type: "filter"
+
+            property var layer: "3d-buildings"
+            property var filter: [ "==", "extrude", "true" ]
+        }
+
+        MapParameter {
+            type: "paint"
+
+            property var layer: "3d-buildings"
+            property var fillExtrusionColor: "#00617f"
+            property var fillExtrusionOpacity: .6
+            property var fillExtrusionHeight: { return { type: "identity", property: "height" } }
+            property var fillExtrusionBase: { return { type: "identity", property: "min_height" } }
+        }
+
         MouseArea {
             anchors.fill: parent
 
@@ -308,6 +332,7 @@ Item {
                 wheel.accepted = false
             }
         }
+
         gesture.onPanStarted: {
             mapWindow.navigating = false
         }

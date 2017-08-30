@@ -45,6 +45,7 @@ ApplicationWindow {
             z: 0
 
             traffic: bottomBar.traffic
+            night: bottomBar.night
         }
 
         BottomBar {
