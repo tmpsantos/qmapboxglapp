@@ -8,7 +8,7 @@ import QtQuick.Layouts 1.0
 ApplicationWindow {
     id: window
 
-    title: "Mapbox GL for Qt 5.9"
+    title: "Mapbox + Qt"
     width: 1024
     height: 768
     visible: true
