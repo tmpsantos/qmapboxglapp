@@ -60,8 +60,6 @@ ApplicationWindow {
             anchors.margins: 10
 
             GroupBox {
-                anchors.left: parent.left
-                anchors.right: parent.right
                 title: "Flip:"
 
                 Slider {
@@ -74,8 +72,6 @@ ApplicationWindow {
             }
 
             GroupBox {
-                anchors.left: parent.left
-                anchors.right: parent.right
                 title: "Dynamic MapParameter:"
 
                 Button {
@@ -93,8 +89,6 @@ ApplicationWindow {
             }
 
             GroupBox {
-                anchors.left: parent.left
-                anchors.right: parent.right
                 title: "Items:"
 
                 ButtonGroup {
